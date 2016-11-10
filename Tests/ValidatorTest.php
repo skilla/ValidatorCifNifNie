@@ -191,9 +191,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     public function testIsValidNIE()
     {
         $validator = new Validator();
-        $this->assertTrue($validator->isValidDNI('X0000000M'));
-        $this->assertFalse($validator->isValidDNI('X0000000'));
-        $this->assertFalse($validator->isValidDNI('X0000000A'));
+        $this->assertTrue($validator->isValidNIE('X0000000T'));
+        $this->assertFalse($validator->isValidNIE('X0000000'));
+        $this->assertFalse($validator->isValidNIE('X0000000A'));
     }
 
     public function testValidate()
