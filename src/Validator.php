@@ -85,6 +85,16 @@ class Validator
         return $generator->getDNICode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
     }
 
+    public function isValidNIE($documentId)
+    {
+        if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isNIEFormat($documentId)) {
+            return false;
+        }
+
+        $generator = new Generator();
+        return $generator->getNIECode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
+    }
+
     public function validate($documentId)
     {
         $generator = new Generator();
