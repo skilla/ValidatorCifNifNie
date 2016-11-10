@@ -1,0 +1,31 @@
+{
+    "name": "skilla/validator-cif-nif-nie",
+    "description": "Validator for Spanish National documents (CIF, NIF, NIE)",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sergio Zambrano Delfa",
+            "email": "sergio.zambrano@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": ">=4.5.0"
+    },
+    "autoload": {
+        "classmap": [
+            "src/"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "Tests/"
+        ]
+    },
+    "config": {
+        "bin-dir": "bin"
+    }
+}
