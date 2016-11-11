@@ -52,17 +52,17 @@ class Validator
      */
     public function isCIFFormat($documentId)
     {
-        return $this->isCIFA($documentId) || $this->isCIFB($documentId);
+        return $this->isCIFL($documentId) || $this->isCIFN($documentId);
     }
 
-    private function isCIFA($documentId)
+    private function isCIFL($documentId)
     {
-         return 1===preg_match(Constant::retrievePattern(Constant::CIFA), $documentId);
+         return 1===preg_match(Constant::retrievePattern(Constant::CIFN), $documentId);
     }
 
-    private function isCIFB($documentId)
+    private function isCIFN($documentId)
     {
-         return 1===preg_match(Constant::retrievePattern(Constant::CIFB), $documentId);
+         return 1===preg_match(Constant::retrievePattern(Constant::CIFL), $documentId);
     }
 
     public function isJuristicFormat($documentId)
@@ -93,6 +93,26 @@ class Validator
 
         $generator = new Generator();
         return $generator->getNIECode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
+    }
+
+    public function isValidNIF($documentId)
+    {
+        if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isNIFFormat($documentId)) {
+            return false;
+        }
+
+        $generator = new Generator();
+        return $generator->getNIFCode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
+    }
+
+    public function isValidCIF($documentId)
+    {
+        if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isCIFFormat($documentId)) {
+            return false;
+        }
+
+        $generator = new Generator();
+        return $generator->getCIFCode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
     }
 
     public function validate($documentId)

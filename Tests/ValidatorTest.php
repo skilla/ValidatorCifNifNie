@@ -8,6 +8,8 @@
 
 namespace Skilla\ValidatorCifNifNie\Test;
 
+use Skilla\ValidatorCifNifNie\Generator;
+use Skilla\ValidatorCifNifNie\Kk;
 use Skilla\ValidatorCifNifNie\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
@@ -194,6 +196,62 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($validator->isValidNIE('X0000000T'));
         $this->assertFalse($validator->isValidNIE('X0000000'));
         $this->assertFalse($validator->isValidNIE('X0000000A'));
+    }
+
+    public function testIsValidNIF()
+    {
+        $validator = new Validator();
+        $this->assertTrue($validator->isValidNIF('K5881850A'));
+        $this->assertFalse($validator->isValidNIF('K5881850'));
+        $this->assertFalse($validator->isValidNIF('K5881850B'));
+    }
+
+    public function testIsValidCIF()
+    {
+        $validator = new Validator();
+        $this->assertTrue($validator->isValidCIF('A01015379'));
+        $this->assertFalse($validator->isValidCIF('A0101537'));
+        $this->assertFalse($validator->isValidCIF('A01015370'));
+
+        $this->assertTrue($validator->isValidCIF('B01117084'));
+        $this->assertFalse($validator->isValidCIF('B0111708'));
+        $this->assertFalse($validator->isValidCIF('B01117080'));
+
+        $this->assertTrue($validator->isValidCIF('C28328508'));
+        $this->assertFalse($validator->isValidCIF('C2832850'));
+        $this->assertFalse($validator->isValidCIF('C28328500'));
+
+        $this->assertTrue($validator->isValidCIF('D90051129'));
+        $this->assertFalse($validator->isValidCIF('D9005112'));
+        $this->assertFalse($validator->isValidCIF('D90051120'));
+
+        $this->assertTrue($validator->isValidCIF('E02473809'));
+        $this->assertFalse($validator->isValidCIF('E0247380'));
+        $this->assertFalse($validator->isValidCIF('E02473800'));
+
+        $this->assertTrue($validator->isValidCIF('F25331422'));
+        $this->assertFalse($validator->isValidCIF('F2533142'));
+        $this->assertFalse($validator->isValidCIF('F25331420'));
+
+        $this->assertTrue($validator->isValidCIF('G08411068'));
+        $this->assertFalse($validator->isValidCIF('G0841106'));
+        $this->assertFalse($validator->isValidCIF('G08411060'));
+
+        $this->assertTrue($validator->isValidCIF('H43530633'));
+        $this->assertFalse($validator->isValidCIF('H4353063'));
+        $this->assertFalse($validator->isValidCIF('H43530630'));
+
+        $this->assertTrue($validator->isValidCIF('J04795183'));
+        $this->assertFalse($validator->isValidCIF('J0479518'));
+        $this->assertFalse($validator->isValidCIF('J04795180'));
+
+        $this->assertTrue($validator->isValidCIF('N0012622G'));
+        $this->assertFalse($validator->isValidCIF('N0012622'));
+        $this->assertFalse($validator->isValidCIF('N0012622A'));
+
+        $this->assertTrue($validator->isValidCIF('P0830600C'));
+        $this->assertFalse($validator->isValidCIF('P0830600'));
+        $this->assertFalse($validator->isValidCIF('P0830600A'));
     }
 
     public function testValidate()

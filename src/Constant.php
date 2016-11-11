@@ -20,15 +20,15 @@ class Constant
     const DNI  = 'DNI';
     const NIE  = 'NIE';
     const NIF  = 'NIF';
-    const CIFA = 'CIFA';
-    const CIFB = 'CIFB';
+    const CIFN = 'CIFL';
+    const CIFL = 'CIFN';
 
     private static $patterns = array(
         self::DNI  => "~^\\d{8,8}[TRWAGMYFPDXBNJZSQVHLCKE]?$~",
         self::NIE  => "~^[XYZ]\\d{7,7}[TRWAGMYFPDXBNJZSQVHLCKE]?$~",
         self::NIF  => "~^[KLM]\\d{7,7}[ABCDEFGHIJ]?$~",
-        self::CIFA => "~^[ABCDEFGHJUV]\\d{7,7}\\d?$~",
-        self::CIFB => "~^[NPQRSW]\\d{7,7}[ABCDEFGHIJ]?$~",
+        self::CIFN => "~^[ABCDEFGHJUV]\\d{7,7}\\d?$~",
+        self::CIFL => "~^[NPQRSW]\\d{7,7}[ABCDEFGHIJ]?$~",
     );
 
     private static $province = array(
