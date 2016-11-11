@@ -8,8 +8,6 @@
 
 namespace Skilla\ValidatorCifNifNie\Test;
 
-use Skilla\ValidatorCifNifNie\Generator;
-use Skilla\ValidatorCifNifNie\Kk;
 use Skilla\ValidatorCifNifNie\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
