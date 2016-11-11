@@ -119,6 +119,6 @@ class Validator
     {
         $generator = new Generator();
         $controlCode = $generator->getCodeFor(substr($documentId, 0, 8));
-        return $controlCode === substr($documentId, -1, 1);
+        return strlen($documentId)===9 && $controlCode === substr($documentId, -1, 1);
     }
 }

@@ -252,12 +252,85 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($validator->isValidCIF('P0830600C'));
         $this->assertFalse($validator->isValidCIF('P0830600'));
         $this->assertFalse($validator->isValidCIF('P0830600A'));
+
+        $this->assertTrue($validator->isValidCIF('Q0801212B'));
+        $this->assertFalse($validator->isValidCIF('Q0801212'));
+        $this->assertFalse($validator->isValidCIF('Q0801212A'));
+
+        $this->assertTrue($validator->isValidCIF('U63240501'));
+        $this->assertFalse($validator->isValidCIF('U6324050'));
+        $this->assertFalse($validator->isValidCIF('U63240500'));
+
+        $this->assertTrue($validator->isValidCIF('V46055810'));
+        $this->assertFalse($validator->isValidCIF('V4605581'));
+        $this->assertFalse($validator->isValidCIF('V46055811'));
+
+        $this->assertTrue($validator->isValidCIF('W0049001A'));
+        $this->assertFalse($validator->isValidCIF('W0049001'));
+        $this->assertFalse($validator->isValidCIF('W0049001B'));
     }
 
     public function testValidate()
     {
         $validator = new Validator();
-        $this->assertTrue($validator->validate('43504758M'));
-        $this->assertFalse($validator->validate('43504758A'));
+        $this->assertTrue($validator->validate('A01015379'));
+        $this->assertFalse($validator->validate('A0101537'));
+        $this->assertFalse($validator->validate('A01015370'));
+
+        $this->assertTrue($validator->validate('B01117084'));
+        $this->assertFalse($validator->validate('B0111708'));
+        $this->assertFalse($validator->validate('B01117080'));
+
+        $this->assertTrue($validator->validate('C28328508'));
+        $this->assertFalse($validator->validate('C2832850'));
+        $this->assertFalse($validator->validate('C28328500'));
+
+        $this->assertTrue($validator->validate('D90051129'));
+        $this->assertFalse($validator->validate('D9005112'));
+        $this->assertFalse($validator->validate('D90051120'));
+
+        $this->assertTrue($validator->validate('E02473809'));
+        $this->assertFalse($validator->validate('E0247380'));
+        $this->assertFalse($validator->validate('E02473800'));
+
+        $this->assertTrue($validator->validate('F25331422'));
+        $this->assertFalse($validator->validate('F2533142'));
+        $this->assertFalse($validator->validate('F25331420'));
+
+        $this->assertTrue($validator->validate('G08411068'));
+        $this->assertFalse($validator->validate('G0841106'));
+        $this->assertFalse($validator->validate('G08411060'));
+
+        $this->assertTrue($validator->validate('H43530633'));
+        $this->assertFalse($validator->validate('H4353063'));
+        $this->assertFalse($validator->validate('H43530630'));
+
+        $this->assertTrue($validator->validate('J04795183'));
+        $this->assertFalse($validator->validate('J0479518'));
+        $this->assertFalse($validator->validate('J04795180'));
+
+        $this->assertTrue($validator->validate('N0012622G'));
+        $this->assertFalse($validator->validate('N0012622'));
+        $this->assertFalse($validator->validate('N0012622A'));
+
+        $this->assertTrue($validator->validate('P0830600C'));
+        $this->assertFalse($validator->validate('P0830600'));
+        $this->assertFalse($validator->validate('P0830600A'));
+
+        $this->assertTrue($validator->validate('Q0801212B'));
+        $this->assertFalse($validator->validate('Q0801212'));
+        $this->assertFalse($validator->validate('Q0801212A'));
+
+        $this->assertTrue($validator->validate('U63240501'));
+        $this->assertFalse($validator->validate('U6324050'));
+        $this->assertFalse($validator->validate('U63240500'));
+
+        $this->assertTrue($validator->validate('V46055810'));
+        $this->assertFalse($validator->validate('V4605581'));
+        $this->assertFalse($validator->validate('V46055811'));
+
+        $this->assertTrue($validator->validate('W0049001A'));
+        $this->assertFalse($validator->validate('W0049001'));
+        $this->assertFalse($validator->validate('W0049001B'));
     }
 }
