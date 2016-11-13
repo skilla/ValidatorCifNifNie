@@ -32,18 +32,18 @@ class Validator
      * @param $documentId
      * @return bool
      */
-    public function isPersonalFormat($documentId)
+    public function isNIFFormat($documentId)
     {
-         return $this->isDNIFormat($documentId) || $this->isNIEFormat($documentId);
+        return 1===preg_match(Constant::retrievePattern(Constant::NIF), $documentId);
     }
 
     /**
      * @param $documentId
      * @return bool
      */
-    public function isNIFFormat($documentId)
+    public function isPersonalFormat($documentId)
     {
-        return 1===preg_match(Constant::retrievePattern(Constant::NIF), $documentId);
+         return $this->isDNIFormat($documentId) || $this->isNIEFormat($documentId) || $this->isNIFFormat($documentId);
     }
 
     /**
@@ -65,14 +65,9 @@ class Validator
          return 1===preg_match(Constant::retrievePattern(Constant::CIFL), $documentId);
     }
 
-    public function isJuristicFormat($documentId)
-    {
-         return $this->isNIFFormat($documentId) || $this->isCIFFormat($documentId);
-    }
-
     public function isValidFormat($documentId)
     {
-        return $this->isPersonalFormat($documentId) || $this->isJuristicFormat($documentId);
+        return $this->isPersonalFormat($documentId) || $this->isCIFFormat($documentId);
     }
 
     public function isValidDNI($documentId)

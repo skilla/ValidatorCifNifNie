@@ -60,30 +60,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isNIEFormat('N08123456'));
     }
 
-    public function testIsPersonalFormat()
-    {
-        $validator = new Validator();
-        $this->assertTrue($validator->isPersonalFormat('12345678A'));
-        $this->assertTrue($validator->isPersonalFormat('12345678'));
-        $this->assertFalse($validator->isPersonalFormat('123456789'));
-
-        $this->assertTrue($validator->isPersonalFormat('X0812345A'));
-        $this->assertTrue($validator->isPersonalFormat('X0812345'));
-        $this->assertFalse($validator->isPersonalFormat('X08123456'));
-
-        $this->assertFalse($validator->isPersonalFormat('K0812345A'));
-        $this->assertFalse($validator->isPersonalFormat('K0812345'));
-        $this->assertFalse($validator->isPersonalFormat('K08123456'));
-
-        $this->assertFalse($validator->isPersonalFormat('A08123456'));
-        $this->assertFalse($validator->isPersonalFormat('A0812345'));
-        $this->assertFalse($validator->isPersonalFormat('A0812345B'));
-
-        $this->assertFalse($validator->isPersonalFormat('N0812345A'));
-        $this->assertFalse($validator->isPersonalFormat('N0812345'));
-        $this->assertFalse($validator->isPersonalFormat('N08123456'));
-    }
-
     public function testIsNIFFormat()
     {
         $validator = new Validator();
@@ -108,6 +84,30 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($validator->isNIFFormat('N08123456'));
     }
 
+    public function testIsPersonalFormat()
+    {
+        $validator = new Validator();
+        $this->assertTrue($validator->isPersonalFormat('12345678A'));
+        $this->assertTrue($validator->isPersonalFormat('12345678'));
+        $this->assertFalse($validator->isPersonalFormat('123456789'));
+
+        $this->assertTrue($validator->isPersonalFormat('X0812345A'));
+        $this->assertTrue($validator->isPersonalFormat('X0812345'));
+        $this->assertFalse($validator->isPersonalFormat('X08123456'));
+
+        $this->assertTrue($validator->isPersonalFormat('K0812345A'));
+        $this->assertTrue($validator->isPersonalFormat('K0812345'));
+        $this->assertFalse($validator->isPersonalFormat('K08123456'));
+
+        $this->assertFalse($validator->isPersonalFormat('A08123456'));
+        $this->assertFalse($validator->isPersonalFormat('A0812345'));
+        $this->assertFalse($validator->isPersonalFormat('A0812345B'));
+
+        $this->assertFalse($validator->isPersonalFormat('N0812345A'));
+        $this->assertFalse($validator->isPersonalFormat('N0812345'));
+        $this->assertFalse($validator->isPersonalFormat('N08123456'));
+    }
+
     public function testIsCIFFormat()
     {
         $validator = new Validator();
@@ -130,30 +130,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($validator->isCIFFormat('N0812345A'));
         $this->assertTrue($validator->isCIFFormat('N0812345'));
         $this->assertFalse($validator->isCIFFormat('N08123456'));
-    }
-
-    public function testIsJuristicFormat()
-    {
-        $validator = new Validator();
-        $this->assertFalse($validator->isJuristicFormat('12345678A'));
-        $this->assertFalse($validator->isJuristicFormat('12345678'));
-        $this->assertFalse($validator->isJuristicFormat('123456789'));
-
-        $this->assertFalse($validator->isJuristicFormat('X0812345A'));
-        $this->assertFalse($validator->isJuristicFormat('X0812345'));
-        $this->assertFalse($validator->isJuristicFormat('X08123456'));
-
-        $this->assertTrue($validator->isJuristicFormat('K0812345A'));
-        $this->assertTrue($validator->isJuristicFormat('K0812345'));
-        $this->assertFalse($validator->isJuristicFormat('K08123456'));
-
-        $this->assertTrue($validator->isJuristicFormat('A08123456'));
-        $this->assertTrue($validator->isJuristicFormat('A0812345'));
-        $this->assertFalse($validator->isJuristicFormat('A0812345B'));
-
-        $this->assertTrue($validator->isJuristicFormat('N0812345A'));
-        $this->assertTrue($validator->isJuristicFormat('N0812345'));
-        $this->assertFalse($validator->isJuristicFormat('N08123456'));
     }
 
     public function testIsValidFormat()
