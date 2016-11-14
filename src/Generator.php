@@ -36,7 +36,7 @@ class Generator
             throw new InvalidParameterException();
         }
 
-        str_replace(array('X', 'Y', 'Z'), array('', '1', '2'), $documentId);
+        $documentId = str_replace(array('X', 'Y', 'Z'), array('', '1', '2'), $documentId);
 
         $modulo = (int)$documentId % 23;
         return substr('TRWAGMYFPDXBNJZSQVHLCKE', $modulo, 1);
@@ -97,6 +97,7 @@ class Generator
     {
         foreach ($this->functions as $key => $method) {
             if (1===preg_match(Constant::retrievePattern($key), $documentId)) {
+                echo "$method($documentId) => " . $this->$method($documentId) . "\n";
                 return $this->$method($documentId);
             }
         }

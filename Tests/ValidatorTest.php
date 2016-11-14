@@ -306,5 +306,17 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($validator->validate('W0049001A'));
         $this->assertFalse($validator->validate('W0049001'));
         $this->assertFalse($validator->validate('W0049001B'));
+
+        $this->assertTrue($validator->validate('X9994480Z'));
+        $this->assertFalse($validator->validate('X9994480'));
+        $this->assertFalse($validator->validate('X9994480A'));
+
+        $this->assertTrue($validator->validate('Y4674358J'));
+        $this->assertFalse($validator->validate('Y4674358'));
+        $this->assertFalse($validator->validate('Y4674358A'));
+
+        $this->assertTrue($validator->validate('Z2842169H'));
+        $this->assertFalse($validator->validate('Z2842169'));
+        $this->assertFalse($validator->validate('Z2842169A'));
     }
 }

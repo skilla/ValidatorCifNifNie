@@ -62,7 +62,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
         $generator = new Generator();
 
         $this->assertEquals('Z', $generator->getCodeFor('12345678'));
-        $this->assertEquals('T', $generator->getCodeFor('X0812345'));
+        $this->assertEquals('Z', $generator->getCodeFor('X9994480'));
         $this->assertEquals('G', $generator->getCodeFor('K0812345'));
         $this->assertEquals('9', $generator->getCodeFor('A0101537'));
         $this->assertEquals('G', $generator->getCodeFor('N0812345'));
