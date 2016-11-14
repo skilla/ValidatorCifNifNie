@@ -97,7 +97,6 @@ class Generator
     {
         foreach ($this->functions as $key => $method) {
             if (1===preg_match(Constant::retrievePattern($key), $documentId)) {
-                echo "$method($documentId) => " . $this->$method($documentId) . "\n";
                 return $this->$method($documentId);
             }
         }
