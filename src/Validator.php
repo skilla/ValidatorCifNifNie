@@ -57,12 +57,12 @@ class Validator
 
     private function isCIFL($documentId)
     {
-         return 1===preg_match(Constant::retrievePattern(Constant::CIFN), $documentId);
+         return 1===preg_match(Constant::retrievePattern(Constant::CIFL), $documentId);
     }
 
     private function isCIFN($documentId)
     {
-         return 1===preg_match(Constant::retrievePattern(Constant::CIFL), $documentId);
+         return 1===preg_match(Constant::retrievePattern(Constant::CIFN), $documentId);
     }
 
     public function isValidFormat($documentId)

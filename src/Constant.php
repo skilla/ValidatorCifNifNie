@@ -20,8 +20,8 @@ class Constant
     const DNI  = 'DNI';
     const NIE  = 'NIE';
     const NIF  = 'NIF';
-    const CIFN = 'CIFL';
-    const CIFL = 'CIFN';
+    const CIFN = 'CIFN';
+    const CIFL = 'CIFL';
 
     private static $patterns = array(
         self::DNI  => "~^\\d{8,8}[TRWAGMYFPDXBNJZSQVHLCKE]?$~",
