@@ -12,311 +12,383 @@ use Skilla\ValidatorCifNifNie\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
-    public function testIsDNIFormat()
+    /**
+     * @var Validator
+     */
+    private $objectToTest;
+
+    public function setUp()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->isDNIFormat('12345678A'));
-        $this->assertTrue($validator->isDNIFormat('12345678'));
-        $this->assertFalse($validator->isDNIFormat('123456789'));
-
-        $this->assertFalse($validator->isDNIFormat('X0812345A'));
-        $this->assertFalse($validator->isDNIFormat('X0812345'));
-        $this->assertFalse($validator->isDNIFormat('X08123456'));
-
-        $this->assertFalse($validator->isDNIFormat('K0812345A'));
-        $this->assertFalse($validator->isDNIFormat('K0812345'));
-        $this->assertFalse($validator->isDNIFormat('K08123456'));
-
-        $this->assertFalse($validator->isDNIFormat('A08123456'));
-        $this->assertFalse($validator->isDNIFormat('A0812345'));
-        $this->assertFalse($validator->isDNIFormat('A0812345B'));
-
-        $this->assertFalse($validator->isDNIFormat('N0812345A'));
-        $this->assertFalse($validator->isDNIFormat('N0812345'));
-        $this->assertFalse($validator->isDNIFormat('N08123456'));
+        $this->objectToTest = new Validator();
     }
 
-    public function testIsNIEFormat()
+    /**
+     * @param string $documentId
+     * @dataProvider goodFormatDNIProvider
+     */
+    public function testIsCorrectDNIFormat($documentId)
     {
-        $validator = new Validator();
-        $this->assertFalse($validator->isNIEFormat('12345678A'));
-        $this->assertFalse($validator->isNIEFormat('12345678'));
-        $this->assertFalse($validator->isNIEFormat('123456789'));
+        $this->assertTrue(
+            $this->objectToTest->isDNIFormat($documentId),
+            sprintf("%s is not in a proper DNI format", $documentId)
+        );
+    }
 
-        $this->assertTrue($validator->isNIEFormat('X0812345A'));
-        $this->assertTrue($validator->isNIEFormat('X0812345'));
-        $this->assertFalse($validator->isNIEFormat('X08123456'));
+    public function goodFormatDNIProvider()
+    {
+        return array(
+            array(
+                '12345678A',
+                '12345678'
+            )
+        );
+    }
 
-        $this->assertFalse($validator->isNIEFormat('K0812345A'));
-        $this->assertFalse($validator->isNIEFormat('K0812345'));
-        $this->assertFalse($validator->isNIEFormat('K08123456'));
+    /**
+     * @param string $documentId
+     * @dataProvider badFormatDNIProvider
+     */
+    public function testIsWrongDNIFormat($documentId)
+    {
+        $this->assertFalse(
+            $this->objectToTest->isDNIFormat($documentId),
+            sprintf("%s is in a proper DNI format", $documentId)
+        );
+    }
 
-        $this->assertFalse($validator->isNIEFormat('A08123456'));
-        $this->assertFalse($validator->isNIEFormat('A0812345'));
-        $this->assertFalse($validator->isNIEFormat('A0812345B'));
+    public function badFormatDNIProvider()
+    {
+        return array(
+            array(
+                '123456789',
+                'X0812345A',
+                'X0812345',
+                'X08123456',
+                'K0812345A',
+                'K0812345',
+                'K08123456',
+                'A08123456',
+                'A0812345',
+                'A0812345B',
+                'N0812345A',
+                'N0812345',
+                'N08123456'
+            )
+        );
+    }
 
-        $this->assertFalse($validator->isNIEFormat('N0812345A'));
-        $this->assertFalse($validator->isNIEFormat('N0812345'));
-        $this->assertFalse($validator->isNIEFormat('N08123456'));
+    /**
+     * @param string $documentId
+     * @dataProvider goodFormatNIEProvider
+     */
+    public function testIsCorrectNIEFormat($documentId)
+    {
+        $this->assertTrue(
+            $this->objectToTest->isNIEFormat($documentId),
+            sprintf("%s is not in a proper NIE format", $documentId)
+        );
+    }
+
+    public function goodFormatNIEProvider()
+    {
+        return array(
+            array(
+                'X0812345A',
+                'X0812345'
+            )
+        );
+    }
+
+    /**
+     * @param string $documentId
+     * @dataProvider badFormatNIEProvider
+     */
+    public function testIsWrongNIEFormat($documentId)
+    {
+        $this->assertFalse(
+            $this->objectToTest->isNIEFormat($documentId),
+            sprintf("%s is in a proper NIE format", $documentId)
+        );
+    }
+
+    public function badFormatNIEProvider()
+    {
+        return array(
+            array(
+                '12345678A',
+                '12345678',
+                '123456789',
+                'X08123456',
+                'K0812345A',
+                'K0812345',
+                'K08123456',
+                'A08123456',
+                'A0812345',
+                'A0812345B',
+                'N0812345A',
+                'N0812345',
+                'N08123456'
+            )
+        );
     }
 
     public function testIsNIFFormat()
     {
-        $validator = new Validator();
-        $this->assertFalse($validator->isNIFFormat('12345678A'));
-        $this->assertFalse($validator->isNIFFormat('12345678'));
-        $this->assertFalse($validator->isNIFFormat('123456789'));
 
-        $this->assertFalse($validator->isNIFFormat('X0812345A'));
-        $this->assertFalse($validator->isNIFFormat('X0812345'));
-        $this->assertFalse($validator->isNIFFormat('X08123456'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('12345678A'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('12345678'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('123456789'));
 
-        $this->assertTrue($validator->isNIFFormat('K0812345A'));
-        $this->assertTrue($validator->isNIFFormat('K0812345'));
-        $this->assertFalse($validator->isNIFFormat('K08123456'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('X0812345A'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('X0812345'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('X08123456'));
 
-        $this->assertFalse($validator->isNIFFormat('A08123456'));
-        $this->assertFalse($validator->isNIFFormat('A0812345'));
-        $this->assertFalse($validator->isNIFFormat('A0812345B'));
+        $this->assertTrue($this->objectToTest->isNIFFormat('K0812345A'));
+        $this->assertTrue($this->objectToTest->isNIFFormat('K0812345'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('K08123456'));
 
-        $this->assertFalse($validator->isNIFFormat('N0812345A'));
-        $this->assertFalse($validator->isNIFFormat('N0812345'));
-        $this->assertFalse($validator->isNIFFormat('N08123456'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('A08123456'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('A0812345'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('A0812345B'));
+
+        $this->assertFalse($this->objectToTest->isNIFFormat('N0812345A'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('N0812345'));
+        $this->assertFalse($this->objectToTest->isNIFFormat('N08123456'));
     }
 
     public function testIsPersonalFormat()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->isPersonalFormat('12345678A'));
-        $this->assertTrue($validator->isPersonalFormat('12345678'));
-        $this->assertFalse($validator->isPersonalFormat('123456789'));
 
-        $this->assertTrue($validator->isPersonalFormat('X0812345A'));
-        $this->assertTrue($validator->isPersonalFormat('X0812345'));
-        $this->assertFalse($validator->isPersonalFormat('X08123456'));
+        $this->assertTrue($this->objectToTest->isPersonalFormat('12345678A'));
+        $this->assertTrue($this->objectToTest->isPersonalFormat('12345678'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('123456789'));
 
-        $this->assertTrue($validator->isPersonalFormat('K0812345A'));
-        $this->assertTrue($validator->isPersonalFormat('K0812345'));
-        $this->assertFalse($validator->isPersonalFormat('K08123456'));
+        $this->assertTrue($this->objectToTest->isPersonalFormat('X0812345A'));
+        $this->assertTrue($this->objectToTest->isPersonalFormat('X0812345'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('X08123456'));
 
-        $this->assertFalse($validator->isPersonalFormat('A08123456'));
-        $this->assertFalse($validator->isPersonalFormat('A0812345'));
-        $this->assertFalse($validator->isPersonalFormat('A0812345B'));
+        $this->assertTrue($this->objectToTest->isPersonalFormat('K0812345A'));
+        $this->assertTrue($this->objectToTest->isPersonalFormat('K0812345'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('K08123456'));
 
-        $this->assertFalse($validator->isPersonalFormat('N0812345A'));
-        $this->assertFalse($validator->isPersonalFormat('N0812345'));
-        $this->assertFalse($validator->isPersonalFormat('N08123456'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('A08123456'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('A0812345'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('A0812345B'));
+
+        $this->assertFalse($this->objectToTest->isPersonalFormat('N0812345A'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('N0812345'));
+        $this->assertFalse($this->objectToTest->isPersonalFormat('N08123456'));
     }
 
     public function testIsCIFFormat()
     {
-        $validator = new Validator();
-        $this->assertFalse($validator->isCIFFormat('12345678A'));
-        $this->assertFalse($validator->isCIFFormat('12345678'));
-        $this->assertFalse($validator->isCIFFormat('123456789'));
 
-        $this->assertFalse($validator->isCIFFormat('X0812345A'));
-        $this->assertFalse($validator->isCIFFormat('X0812345'));
-        $this->assertFalse($validator->isCIFFormat('X08123456'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('12345678A'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('12345678'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('123456789'));
 
-        $this->assertFalse($validator->isCIFFormat('K0812345A'));
-        $this->assertFalse($validator->isCIFFormat('K0812345'));
-        $this->assertFalse($validator->isCIFFormat('K08123456'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('X0812345A'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('X0812345'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('X08123456'));
 
-        $this->assertTrue($validator->isCIFFormat('A08123456'));
-        $this->assertTrue($validator->isCIFFormat('A0812345'));
-        $this->assertFalse($validator->isCIFFormat('A0812345B'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('K0812345A'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('K0812345'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('K08123456'));
 
-        $this->assertTrue($validator->isCIFFormat('N0812345A'));
-        $this->assertTrue($validator->isCIFFormat('N0812345'));
-        $this->assertFalse($validator->isCIFFormat('N08123456'));
+        $this->assertTrue($this->objectToTest->isCIFFormat('A08123456'));
+        $this->assertTrue($this->objectToTest->isCIFFormat('A0812345'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('A0812345B'));
+
+        $this->assertTrue($this->objectToTest->isCIFFormat('N0812345A'));
+        $this->assertTrue($this->objectToTest->isCIFFormat('N0812345'));
+        $this->assertFalse($this->objectToTest->isCIFFormat('N08123456'));
     }
 
     public function testIsValidFormat()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->isValidFormat('12345678A'));
-        $this->assertTrue($validator->isValidFormat('12345678'));
-        $this->assertFalse($validator->isValidFormat('123456789'));
 
-        $this->assertTrue($validator->isValidFormat('X0812345A'));
-        $this->assertTrue($validator->isValidFormat('X0812345'));
-        $this->assertFalse($validator->isValidFormat('X08123456'));
+        $this->assertTrue($this->objectToTest->isValidFormat('12345678A'));
+        $this->assertTrue($this->objectToTest->isValidFormat('12345678'));
+        $this->assertFalse($this->objectToTest->isValidFormat('123456789'));
 
-        $this->assertTrue($validator->isValidFormat('K0812345A'));
-        $this->assertTrue($validator->isValidFormat('K0812345'));
-        $this->assertFalse($validator->isValidFormat('K08123456'));
+        $this->assertTrue($this->objectToTest->isValidFormat('X0812345A'));
+        $this->assertTrue($this->objectToTest->isValidFormat('X0812345'));
+        $this->assertFalse($this->objectToTest->isValidFormat('X08123456'));
 
-        $this->assertTrue($validator->isValidFormat('A08123456'));
-        $this->assertTrue($validator->isValidFormat('A0812345'));
-        $this->assertFalse($validator->isValidFormat('A0812345B'));
+        $this->assertTrue($this->objectToTest->isValidFormat('K0812345A'));
+        $this->assertTrue($this->objectToTest->isValidFormat('K0812345'));
+        $this->assertFalse($this->objectToTest->isValidFormat('K08123456'));
 
-        $this->assertTrue($validator->isValidFormat('N0812345A'));
-        $this->assertTrue($validator->isValidFormat('N0812345'));
-        $this->assertFalse($validator->isValidFormat('N08123456'));
+        $this->assertTrue($this->objectToTest->isValidFormat('A08123456'));
+        $this->assertTrue($this->objectToTest->isValidFormat('A0812345'));
+        $this->assertFalse($this->objectToTest->isValidFormat('A0812345B'));
+
+        $this->assertTrue($this->objectToTest->isValidFormat('N0812345A'));
+        $this->assertTrue($this->objectToTest->isValidFormat('N0812345'));
+        $this->assertFalse($this->objectToTest->isValidFormat('N08123456'));
     }
 
     public function testIsValidDNI()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->isValidDNI('00000000T'));
-        $this->assertFalse($validator->isValidDNI('00000000'));
-        $this->assertFalse($validator->isValidDNI('00000000A'));
+
+        $this->assertTrue($this->objectToTest->isValidDNI('00000000T'));
+        $this->assertFalse($this->objectToTest->isValidDNI('00000000'));
+        $this->assertFalse($this->objectToTest->isValidDNI('00000000A'));
     }
 
     public function testIsValidNIE()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->isValidNIE('X0000000T'));
-        $this->assertFalse($validator->isValidNIE('X0000000'));
-        $this->assertFalse($validator->isValidNIE('X0000000A'));
+
+        $this->assertTrue($this->objectToTest->isValidNIE('X0000000T'));
+        $this->assertFalse($this->objectToTest->isValidNIE('X0000000'));
+        $this->assertFalse($this->objectToTest->isValidNIE('X0000000A'));
     }
 
     public function testIsValidNIF()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->isValidNIF('K5881850A'));
-        $this->assertFalse($validator->isValidNIF('K5881850'));
-        $this->assertFalse($validator->isValidNIF('K5881850B'));
+
+        $this->assertTrue($this->objectToTest->isValidNIF('K5881850A'));
+        $this->assertFalse($this->objectToTest->isValidNIF('K5881850'));
+        $this->assertFalse($this->objectToTest->isValidNIF('K5881850B'));
     }
 
     public function testIsValidCIF()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->isValidCIF('A01015379'));
-        $this->assertFalse($validator->isValidCIF('A0101537'));
-        $this->assertFalse($validator->isValidCIF('A01015370'));
 
-        $this->assertTrue($validator->isValidCIF('B01117084'));
-        $this->assertFalse($validator->isValidCIF('B0111708'));
-        $this->assertFalse($validator->isValidCIF('B01117080'));
+        $this->assertTrue($this->objectToTest->isValidCIF('A01015379'));
+        $this->assertFalse($this->objectToTest->isValidCIF('A0101537'));
+        $this->assertFalse($this->objectToTest->isValidCIF('A01015370'));
 
-        $this->assertTrue($validator->isValidCIF('C28328508'));
-        $this->assertFalse($validator->isValidCIF('C2832850'));
-        $this->assertFalse($validator->isValidCIF('C28328500'));
+        $this->assertTrue($this->objectToTest->isValidCIF('B01117084'));
+        $this->assertFalse($this->objectToTest->isValidCIF('B0111708'));
+        $this->assertFalse($this->objectToTest->isValidCIF('B01117080'));
 
-        $this->assertTrue($validator->isValidCIF('D90051129'));
-        $this->assertFalse($validator->isValidCIF('D9005112'));
-        $this->assertFalse($validator->isValidCIF('D90051120'));
+        $this->assertTrue($this->objectToTest->isValidCIF('C28328508'));
+        $this->assertFalse($this->objectToTest->isValidCIF('C2832850'));
+        $this->assertFalse($this->objectToTest->isValidCIF('C28328500'));
 
-        $this->assertTrue($validator->isValidCIF('E02473809'));
-        $this->assertFalse($validator->isValidCIF('E0247380'));
-        $this->assertFalse($validator->isValidCIF('E02473800'));
+        $this->assertTrue($this->objectToTest->isValidCIF('D90051129'));
+        $this->assertFalse($this->objectToTest->isValidCIF('D9005112'));
+        $this->assertFalse($this->objectToTest->isValidCIF('D90051120'));
 
-        $this->assertTrue($validator->isValidCIF('F25331422'));
-        $this->assertFalse($validator->isValidCIF('F2533142'));
-        $this->assertFalse($validator->isValidCIF('F25331420'));
+        $this->assertTrue($this->objectToTest->isValidCIF('E02473809'));
+        $this->assertFalse($this->objectToTest->isValidCIF('E0247380'));
+        $this->assertFalse($this->objectToTest->isValidCIF('E02473800'));
 
-        $this->assertTrue($validator->isValidCIF('G08411068'));
-        $this->assertFalse($validator->isValidCIF('G0841106'));
-        $this->assertFalse($validator->isValidCIF('G08411060'));
+        $this->assertTrue($this->objectToTest->isValidCIF('F25331422'));
+        $this->assertFalse($this->objectToTest->isValidCIF('F2533142'));
+        $this->assertFalse($this->objectToTest->isValidCIF('F25331420'));
 
-        $this->assertTrue($validator->isValidCIF('H43530633'));
-        $this->assertFalse($validator->isValidCIF('H4353063'));
-        $this->assertFalse($validator->isValidCIF('H43530630'));
+        $this->assertTrue($this->objectToTest->isValidCIF('G08411068'));
+        $this->assertFalse($this->objectToTest->isValidCIF('G0841106'));
+        $this->assertFalse($this->objectToTest->isValidCIF('G08411060'));
 
-        $this->assertTrue($validator->isValidCIF('J04795183'));
-        $this->assertFalse($validator->isValidCIF('J0479518'));
-        $this->assertFalse($validator->isValidCIF('J04795180'));
+        $this->assertTrue($this->objectToTest->isValidCIF('H43530633'));
+        $this->assertFalse($this->objectToTest->isValidCIF('H4353063'));
+        $this->assertFalse($this->objectToTest->isValidCIF('H43530630'));
 
-        $this->assertTrue($validator->isValidCIF('N0012622G'));
-        $this->assertFalse($validator->isValidCIF('N0012622'));
-        $this->assertFalse($validator->isValidCIF('N0012622A'));
+        $this->assertTrue($this->objectToTest->isValidCIF('J04795183'));
+        $this->assertFalse($this->objectToTest->isValidCIF('J0479518'));
+        $this->assertFalse($this->objectToTest->isValidCIF('J04795180'));
 
-        $this->assertTrue($validator->isValidCIF('P0830600C'));
-        $this->assertFalse($validator->isValidCIF('P0830600'));
-        $this->assertFalse($validator->isValidCIF('P0830600A'));
+        $this->assertTrue($this->objectToTest->isValidCIF('N0012622G'));
+        $this->assertFalse($this->objectToTest->isValidCIF('N0012622'));
+        $this->assertFalse($this->objectToTest->isValidCIF('N0012622A'));
 
-        $this->assertTrue($validator->isValidCIF('Q0801212B'));
-        $this->assertFalse($validator->isValidCIF('Q0801212'));
-        $this->assertFalse($validator->isValidCIF('Q0801212A'));
+        $this->assertTrue($this->objectToTest->isValidCIF('P0830600C'));
+        $this->assertFalse($this->objectToTest->isValidCIF('P0830600'));
+        $this->assertFalse($this->objectToTest->isValidCIF('P0830600A'));
 
-        $this->assertTrue($validator->isValidCIF('U63240501'));
-        $this->assertFalse($validator->isValidCIF('U6324050'));
-        $this->assertFalse($validator->isValidCIF('U63240500'));
+        $this->assertTrue($this->objectToTest->isValidCIF('Q0801212B'));
+        $this->assertFalse($this->objectToTest->isValidCIF('Q0801212'));
+        $this->assertFalse($this->objectToTest->isValidCIF('Q0801212A'));
 
-        $this->assertTrue($validator->isValidCIF('V46055810'));
-        $this->assertFalse($validator->isValidCIF('V4605581'));
-        $this->assertFalse($validator->isValidCIF('V46055811'));
+        $this->assertTrue($this->objectToTest->isValidCIF('U63240501'));
+        $this->assertFalse($this->objectToTest->isValidCIF('U6324050'));
+        $this->assertFalse($this->objectToTest->isValidCIF('U63240500'));
 
-        $this->assertTrue($validator->isValidCIF('W0049001A'));
-        $this->assertFalse($validator->isValidCIF('W0049001'));
-        $this->assertFalse($validator->isValidCIF('W0049001B'));
+        $this->assertTrue($this->objectToTest->isValidCIF('V46055810'));
+        $this->assertFalse($this->objectToTest->isValidCIF('V4605581'));
+        $this->assertFalse($this->objectToTest->isValidCIF('V46055811'));
+
+        $this->assertTrue($this->objectToTest->isValidCIF('W0049001A'));
+        $this->assertFalse($this->objectToTest->isValidCIF('W0049001'));
+        $this->assertFalse($this->objectToTest->isValidCIF('W0049001B'));
     }
 
     public function testValidate()
     {
-        $validator = new Validator();
-        $this->assertTrue($validator->validate('A01015379'));
-        $this->assertFalse($validator->validate('A0101537'));
-        $this->assertFalse($validator->validate('A01015370'));
 
-        $this->assertTrue($validator->validate('B01117084'));
-        $this->assertFalse($validator->validate('B0111708'));
-        $this->assertFalse($validator->validate('B01117080'));
+        $this->assertTrue($this->objectToTest->validate('A01015379'));
+        $this->assertFalse($this->objectToTest->validate('A0101537'));
+        $this->assertFalse($this->objectToTest->validate('A01015370'));
 
-        $this->assertTrue($validator->validate('C28328508'));
-        $this->assertFalse($validator->validate('C2832850'));
-        $this->assertFalse($validator->validate('C28328500'));
+        $this->assertTrue($this->objectToTest->validate('B01117084'));
+        $this->assertFalse($this->objectToTest->validate('B0111708'));
+        $this->assertFalse($this->objectToTest->validate('B01117080'));
 
-        $this->assertTrue($validator->validate('D90051129'));
-        $this->assertFalse($validator->validate('D9005112'));
-        $this->assertFalse($validator->validate('D90051120'));
+        $this->assertTrue($this->objectToTest->validate('C28328508'));
+        $this->assertFalse($this->objectToTest->validate('C2832850'));
+        $this->assertFalse($this->objectToTest->validate('C28328500'));
 
-        $this->assertTrue($validator->validate('E02473809'));
-        $this->assertFalse($validator->validate('E0247380'));
-        $this->assertFalse($validator->validate('E02473800'));
+        $this->assertTrue($this->objectToTest->validate('D90051129'));
+        $this->assertFalse($this->objectToTest->validate('D9005112'));
+        $this->assertFalse($this->objectToTest->validate('D90051120'));
 
-        $this->assertTrue($validator->validate('F25331422'));
-        $this->assertFalse($validator->validate('F2533142'));
-        $this->assertFalse($validator->validate('F25331420'));
+        $this->assertTrue($this->objectToTest->validate('E02473809'));
+        $this->assertFalse($this->objectToTest->validate('E0247380'));
+        $this->assertFalse($this->objectToTest->validate('E02473800'));
 
-        $this->assertTrue($validator->validate('G08411068'));
-        $this->assertFalse($validator->validate('G0841106'));
-        $this->assertFalse($validator->validate('G08411060'));
+        $this->assertTrue($this->objectToTest->validate('F25331422'));
+        $this->assertFalse($this->objectToTest->validate('F2533142'));
+        $this->assertFalse($this->objectToTest->validate('F25331420'));
 
-        $this->assertTrue($validator->validate('H43530633'));
-        $this->assertFalse($validator->validate('H4353063'));
-        $this->assertFalse($validator->validate('H43530630'));
+        $this->assertTrue($this->objectToTest->validate('G08411068'));
+        $this->assertFalse($this->objectToTest->validate('G0841106'));
+        $this->assertFalse($this->objectToTest->validate('G08411060'));
 
-        $this->assertTrue($validator->validate('J04795183'));
-        $this->assertFalse($validator->validate('J0479518'));
-        $this->assertFalse($validator->validate('J04795180'));
+        $this->assertTrue($this->objectToTest->validate('H43530633'));
+        $this->assertFalse($this->objectToTest->validate('H4353063'));
+        $this->assertFalse($this->objectToTest->validate('H43530630'));
 
-        $this->assertTrue($validator->validate('N0012622G'));
-        $this->assertFalse($validator->validate('N0012622'));
-        $this->assertFalse($validator->validate('N0012622A'));
+        $this->assertTrue($this->objectToTest->validate('J04795183'));
+        $this->assertFalse($this->objectToTest->validate('J0479518'));
+        $this->assertFalse($this->objectToTest->validate('J04795180'));
 
-        $this->assertTrue($validator->validate('P0830600C'));
-        $this->assertFalse($validator->validate('P0830600'));
-        $this->assertFalse($validator->validate('P0830600A'));
+        $this->assertTrue($this->objectToTest->validate('N0012622G'));
+        $this->assertFalse($this->objectToTest->validate('N0012622'));
+        $this->assertFalse($this->objectToTest->validate('N0012622A'));
 
-        $this->assertTrue($validator->validate('Q0801212B'));
-        $this->assertFalse($validator->validate('Q0801212'));
-        $this->assertFalse($validator->validate('Q0801212A'));
+        $this->assertTrue($this->objectToTest->validate('P0830600C'));
+        $this->assertFalse($this->objectToTest->validate('P0830600'));
+        $this->assertFalse($this->objectToTest->validate('P0830600A'));
 
-        $this->assertTrue($validator->validate('U63240501'));
-        $this->assertFalse($validator->validate('U6324050'));
-        $this->assertFalse($validator->validate('U63240500'));
+        $this->assertTrue($this->objectToTest->validate('Q0801212B'));
+        $this->assertFalse($this->objectToTest->validate('Q0801212'));
+        $this->assertFalse($this->objectToTest->validate('Q0801212A'));
 
-        $this->assertTrue($validator->validate('V46055810'));
-        $this->assertFalse($validator->validate('V4605581'));
-        $this->assertFalse($validator->validate('V46055811'));
+        $this->assertTrue($this->objectToTest->validate('U63240501'));
+        $this->assertFalse($this->objectToTest->validate('U6324050'));
+        $this->assertFalse($this->objectToTest->validate('U63240500'));
 
-        $this->assertTrue($validator->validate('W0049001A'));
-        $this->assertFalse($validator->validate('W0049001'));
-        $this->assertFalse($validator->validate('W0049001B'));
+        $this->assertTrue($this->objectToTest->validate('V46055810'));
+        $this->assertFalse($this->objectToTest->validate('V4605581'));
+        $this->assertFalse($this->objectToTest->validate('V46055811'));
 
-        $this->assertTrue($validator->validate('X9994480Z'));
-        $this->assertFalse($validator->validate('X9994480'));
-        $this->assertFalse($validator->validate('X9994480A'));
+        $this->assertTrue($this->objectToTest->validate('W0049001A'));
+        $this->assertFalse($this->objectToTest->validate('W0049001'));
+        $this->assertFalse($this->objectToTest->validate('W0049001B'));
 
-        $this->assertTrue($validator->validate('Y4674358J'));
-        $this->assertFalse($validator->validate('Y4674358'));
-        $this->assertFalse($validator->validate('Y4674358A'));
+        $this->assertTrue($this->objectToTest->validate('X9994480Z'));
+        $this->assertFalse($this->objectToTest->validate('X9994480'));
+        $this->assertFalse($this->objectToTest->validate('X9994480A'));
 
-        $this->assertTrue($validator->validate('Z2842169H'));
-        $this->assertFalse($validator->validate('Z2842169'));
-        $this->assertFalse($validator->validate('Z2842169A'));
+        $this->assertTrue($this->objectToTest->validate('Y4674358J'));
+        $this->assertFalse($this->objectToTest->validate('Y4674358'));
+        $this->assertFalse($this->objectToTest->validate('Y4674358A'));
+
+        $this->assertTrue($this->objectToTest->validate('Z2842169H'));
+        $this->assertFalse($this->objectToTest->validate('Z2842169'));
+        $this->assertFalse($this->objectToTest->validate('Z2842169A'));
     }
 }
