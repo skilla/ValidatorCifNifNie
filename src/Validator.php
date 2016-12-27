@@ -11,34 +11,52 @@ namespace Skilla\ValidatorCifNifNie;
 class Validator
 {
     /**
-     * @param $documentId
+     * @param string $documentId
      * @return bool
      */
     public function isDNIFormat($documentId)
     {
-        return 1===preg_match(Constant::retrievePattern(Constant::DNI), $documentId);
+        return 1 === preg_match(Constant::retrievePattern(Constant::DNI), $documentId);
     }
 
     /**
-     * @param $documentId
+     * @param string $documentId
      * @return bool
      */
     public function isNIEFormat($documentId)
     {
-         return 1===preg_match(Constant::retrievePattern(Constant::NIE), $documentId);
+         return 1 === preg_match(Constant::retrievePattern(Constant::NIE), $documentId);
     }
 
     /**
-     * @param $documentId
+     * @param string $documentId
      * @return bool
      */
     public function isNIFFormat($documentId)
     {
-        return 1===preg_match(Constant::retrievePattern(Constant::NIF), $documentId);
+        return 1 === preg_match(Constant::retrievePattern(Constant::NIF), $documentId);
     }
 
     /**
-     * @param $documentId
+     * @param string $documentId
+     * @return bool
+     */
+    private function isCIFL($documentId)
+    {
+         return 1 === preg_match(Constant::retrievePattern(Constant::CIFL), $documentId);
+    }
+
+    /**
+     * @param string $documentId
+     * @return bool
+     */
+    private function isCIFN($documentId)
+    {
+         return 1 === preg_match(Constant::retrievePattern(Constant::CIFN), $documentId);
+    }
+
+    /**
+     * @param string $documentId
      * @return bool
      */
     public function isPersonalFormat($documentId)
@@ -47,7 +65,7 @@ class Validator
     }
 
     /**
-     * @param $documentId
+     * @param string $documentId
      * @return bool
      */
     public function isCIFFormat($documentId)
@@ -55,21 +73,20 @@ class Validator
         return $this->isCIFL($documentId) || $this->isCIFN($documentId);
     }
 
-    private function isCIFL($documentId)
-    {
-         return 1===preg_match(Constant::retrievePattern(Constant::CIFL), $documentId);
-    }
 
-    private function isCIFN($documentId)
-    {
-         return 1===preg_match(Constant::retrievePattern(Constant::CIFN), $documentId);
-    }
-
+    /**
+     * @param string $documentId
+     * @return bool
+     */
     public function isValidFormat($documentId)
     {
         return $this->isPersonalFormat($documentId) || $this->isCIFFormat($documentId);
     }
 
+    /**
+     * @param string $documentId
+     * @return bool
+     */
     public function isValidDNI($documentId)
     {
         if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isDNIFormat($documentId)) {
@@ -80,6 +97,10 @@ class Validator
         return $generator->getDNICode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
     }
 
+    /**
+     * @param string $documentId
+     * @return bool
+     */
     public function isValidNIE($documentId)
     {
         if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isNIEFormat($documentId)) {
@@ -90,6 +111,10 @@ class Validator
         return $generator->getNIECode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
     }
 
+    /**
+     * @param string $documentId
+     * @return bool
+     */
     public function isValidNIF($documentId)
     {
         if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isNIFFormat($documentId)) {
@@ -100,6 +125,10 @@ class Validator
         return $generator->getNIFCode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
     }
 
+    /**
+     * @param string $documentId
+     * @return bool
+     */
     public function isValidCIF($documentId)
     {
         if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isCIFFormat($documentId)) {
@@ -110,6 +139,10 @@ class Validator
         return $generator->getCIFCode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
     }
 
+    /**
+     * @param string $documentId
+     * @return bool
+     */
     public function validate($documentId)
     {
         $generator = new Generator();
