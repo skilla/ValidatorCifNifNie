@@ -8,6 +8,7 @@
 
 namespace Skilla\ValidatorCifNifNie\Test;
 
+use Skilla\ValidatorCifNifNie\Generator;
 use Skilla\ValidatorCifNifNie\Validator;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
@@ -19,7 +20,9 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->objectToTest = new Validator();
+        $this->objectToTest = new Validator(
+            new Generator()
+        );
     }
 
     /**

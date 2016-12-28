@@ -18,7 +18,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     public function testInvalidFormatException()
     {
         $generator = new Generator();
-        $this->assertEquals('A', $generator->getCodeFor('1A3B5C7D8'));
+        $this->assertEquals('A', $generator->getDocumentCode('1A3B5C7D8'));
     }
 
     /**
@@ -27,7 +27,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     public function testValidateDNIException()
     {
         $generator = new Generator();
-        $this->assertEquals('A', $generator->getCodeFor('12345678A'));
+        $this->assertEquals('A', $generator->getDocumentCode('12345678A'));
     }
 
     /**
@@ -36,7 +36,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     public function testValidateNIEException()
     {
         $generator = new Generator();
-        $this->assertEquals('A', $generator->getCodeFor('X0812345A'));
+        $this->assertEquals('A', $generator->getDocumentCode('X0812345A'));
     }
 
     /**
@@ -45,7 +45,7 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     public function testValidateNIFException()
     {
         $generator = new Generator();
-        $this->assertEquals('A', $generator->getCodeFor('K0812345A'));
+        $this->assertEquals('A', $generator->getDocumentCode('K0812345A'));
     }
 
     /**
@@ -54,17 +54,17 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
     public function testValidateCIFException()
     {
         $generator = new Generator();
-        $this->assertEquals('6', $generator->getCodeFor('A08123456'));
+        $this->assertEquals('6', $generator->getDocumentCode('A08123456'));
     }
 
     public function testValidate()
     {
         $generator = new Generator();
 
-        $this->assertEquals('Z', $generator->getCodeFor('12345678'));
-        $this->assertEquals('Z', $generator->getCodeFor('X9994480'));
-        $this->assertEquals('G', $generator->getCodeFor('K0812345'));
-        $this->assertEquals('9', $generator->getCodeFor('A0101537'));
-        $this->assertEquals('G', $generator->getCodeFor('N0812345'));
+        $this->assertEquals('Z', $generator->getDocumentCode('12345678'));
+        $this->assertEquals('Z', $generator->getDocumentCode('X9994480'));
+        $this->assertEquals('G', $generator->getDocumentCode('K0812345'));
+        $this->assertEquals('9', $generator->getDocumentCode('A0101537'));
+        $this->assertEquals('G', $generator->getDocumentCode('N0812345'));
     }
 }

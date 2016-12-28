@@ -10,6 +10,17 @@ namespace Skilla\ValidatorCifNifNie;
 
 class Validator
 {
+    const DOCUMENT_LENGTH_WITH_CODE = 9;
+    const DOCUMENT_LENGTH_WITHOUT_CODE = 8;
+
+    /**
+     * @param Generator $generator
+     */
+    public function __construct($generator)
+    {
+        $this->generator = $generator;
+    }
+
     /**
      * @param string $documentId
      * @return bool
@@ -73,7 +84,6 @@ class Validator
         return $this->isCIFL($documentId) || $this->isCIFN($documentId);
     }
 
-
     /**
      * @param string $documentId
      * @return bool
@@ -89,12 +99,17 @@ class Validator
      */
     public function isValidDNI($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isDNIFormat($documentId)) {
+        if (!is_string($documentId) ||
+            strlen($documentId) !== self::DOCUMENT_LENGTH_WITH_CODE ||
+            !$this->isDNIFormat($documentId)
+        ) {
             return false;
         }
 
-        $generator = new Generator();
-        return $generator->getDNICode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
+        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $code = $this->generator->getDNICode($documentFirstEightChars);
+
+        return $code === $this->getLastCharOfString($documentId);
     }
 
     /**
@@ -103,12 +118,13 @@ class Validator
      */
     public function isValidNIE($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isNIEFormat($documentId)) {
+        if (!is_string($documentId) || strlen($documentId)!== self::DOCUMENT_LENGTH_WITH_CODE || !$this->isNIEFormat($documentId)) {
             return false;
         }
+        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $code = $this->generator->getNIECode($documentFirstEightChars);
 
-        $generator = new Generator();
-        return $generator->getNIECode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
+        return $code === $this->getLastCharOfString($documentId);
     }
 
     /**
@@ -117,12 +133,16 @@ class Validator
      */
     public function isValidNIF($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isNIFFormat($documentId)) {
+        if (!is_string($documentId) ||
+            strlen($documentId) !== self::DOCUMENT_LENGTH_WITH_CODE ||
+            !$this->isNIFFormat($documentId)
+        ) {
             return false;
         }
+        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $code = $this->generator->getNIFCode($documentFirstEightChars);
 
-        $generator = new Generator();
-        return $generator->getNIFCode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
+        return $code === $this->getLastCharOfString($documentId);
     }
 
     /**
@@ -131,12 +151,16 @@ class Validator
      */
     public function isValidCIF($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId)!==9 || !$this->isCIFFormat($documentId)) {
+        if (!is_string($documentId) ||
+            strlen($documentId) !== self::DOCUMENT_LENGTH_WITH_CODE
+            || !$this->isCIFFormat($documentId)
+        ) {
             return false;
         }
+        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $code = $this->generator->getCIFCode($documentFirstEightChars);
 
-        $generator = new Generator();
-        return $generator->getCIFCode(substr($documentId, 0, 8)) === substr($documentId, -1, 1);
+        return $code === $this->getLastCharOfString($documentId);
     }
 
     /**
@@ -145,8 +169,18 @@ class Validator
      */
     public function validate($documentId)
     {
-        $generator = new Generator();
-        $controlCode = $generator->getCodeFor(substr($documentId, 0, 8));
-        return strlen($documentId)===9 && $controlCode === substr($documentId, -1, 1);
+        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $controlCode = $this->generator->getDocumentCode($documentFirstEightChars);
+
+        return strlen($documentId) === self::DOCUMENT_LENGTH_WITH_CODE && $controlCode === $this->getLastCharOfString($documentId);
+    }
+
+    /**
+     * @param string $documentId
+     * @return string
+     */
+    private function getLastCharOfString($documentId)
+    {
+        return substr($documentId, -1, 1);
     }
 }

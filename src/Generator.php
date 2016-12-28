@@ -18,7 +18,7 @@ class Generator
         Constant::CIFL => 'getCIFCode',
     );
 
-    const DOCUMENT_LENGTH = 8;
+    const DOCUMENT_LENGTH_WITHOUT_CODE = 8;
 
     /**
      * @param string $documentId
@@ -27,7 +27,7 @@ class Generator
      */
     public function getDNICode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $modulo = (int)$documentId % 23;
@@ -42,7 +42,7 @@ class Generator
      */
     public function getNIECode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $documentId = str_replace(array('X', 'Y', 'Z'), array('', '1', '2'), $documentId);
@@ -58,7 +58,7 @@ class Generator
      */
     public function getNIFCode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $modulo = $this->calculateModule($documentId);
@@ -73,7 +73,7 @@ class Generator
      */
     public function getCIFCode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $modulo = $this->calculateModule($documentId);
@@ -114,7 +114,7 @@ class Generator
      * @return mixed
      * @throws InvalidParameterException
      */
-    public function getCodeFor($documentId)
+    public function getDocumentCode($documentId)
     {
         foreach ($this->functions as $key => $method) {
             if (1 === preg_match(Constant::retrievePattern($key), $documentId)) {
