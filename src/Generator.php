@@ -18,56 +18,72 @@ class Generator
         Constant::CIFL => 'getCIFCode',
     );
 
+    const DOCUMENT_LENGTH_WITHOUT_CODE = 8;
+
+    /**
+     * @param string $documentId
+     * @return string
+     * @throws InvalidParameterException
+     */
     public function getDNICode($documentId)
     {
-        $validator = new Validator();
-        if (!is_string($documentId) || strlen($documentId)!==8 || !$validator->isDNIFormat($documentId)) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
-
         $modulo = (int)$documentId % 23;
+
         return substr('TRWAGMYFPDXBNJZSQVHLCKE', $modulo, 1);
     }
 
+    /**
+     * @param string $documentId
+     * @return string
+     * @throws InvalidParameterException
+     */
     public function getNIECode($documentId)
     {
-        $validator = new Validator();
-        if (!is_string($documentId) || strlen($documentId)!==8 || !$validator->isNIEFormat($documentId)) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
-
         $documentId = str_replace(array('X', 'Y', 'Z'), array('', '1', '2'), $documentId);
-
         $modulo = (int)$documentId % 23;
+
         return substr('TRWAGMYFPDXBNJZSQVHLCKE', $modulo, 1);
     }
 
+    /**
+     * @param string $documentId
+     * @return mixed
+     * @throws InvalidParameterException
+     */
     public function getNIFCode($documentId)
     {
-        $validator = new Validator();
-        if (!is_string($documentId) || strlen($documentId)!==8 || !$validator->isNIFFormat($documentId)) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
-
         $modulo = $this->calculateModule($documentId);
 
         return $modulo[1];
     }
 
+    /**
+     * @param string $documentId
+     * @return string
+     * @throws InvalidParameterException
+     */
     public function getCIFCode($documentId)
     {
-        $validator = new Validator();
-        if (!is_string($documentId) || strlen($documentId)!==8 || !$validator->isCIFFormat($documentId)) {
+        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
-
         $modulo = $this->calculateModule($documentId);
 
-        if (1===preg_match(Constant::retrievePattern(Constant::CIFL), $documentId)) {
-            return $modulo[1];
-        } else {
-            return $modulo[0];
+        $code = $modulo[0];
+        if (1 === preg_match(Constant::retrievePattern(Constant::CIFL), $documentId)) {
+            $code = $modulo[1];
         }
+
+        return $code;
     }
 
     private function calculateModule($documentId)
@@ -93,10 +109,15 @@ class Generator
         return array("$modulo", substr($controlCodes, $modulo, 1));
     }
 
-    public function getCodeFor($documentId)
+    /**
+     * @param string $documentId
+     * @return mixed
+     * @throws InvalidParameterException
+     */
+    public function getDocumentCode($documentId)
     {
         foreach ($this->functions as $key => $method) {
-            if (1===preg_match(Constant::retrievePattern($key), $documentId)) {
+            if (1 === preg_match(Constant::retrievePattern($key), $documentId)) {
                 return $this->$method($documentId);
             }
         }
