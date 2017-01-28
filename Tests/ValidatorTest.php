@@ -494,7 +494,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array(
-
                 'J0479518',
                 'F2533142',
                 'F25331420',

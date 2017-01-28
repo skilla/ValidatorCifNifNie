@@ -27,7 +27,7 @@ class Generator
      */
     public function getDNICode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
+        if (!is_string($documentId) || strlen($documentId) !== static::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $modulo = (int)$documentId % 23;
@@ -42,7 +42,7 @@ class Generator
      */
     public function getNIECode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
+        if (!is_string($documentId) || strlen($documentId) !== static::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $documentId = str_replace(array('X', 'Y', 'Z'), array('', '1', '2'), $documentId);
@@ -58,7 +58,7 @@ class Generator
      */
     public function getNIFCode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
+        if (!is_string($documentId) || strlen($documentId) !== static::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $modulo = $this->calculateModule($documentId);
@@ -73,7 +73,7 @@ class Generator
      */
     public function getCIFCode($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId) !== self::DOCUMENT_LENGTH_WITHOUT_CODE) {
+        if (!is_string($documentId) || strlen($documentId) !== static::DOCUMENT_LENGTH_WITHOUT_CODE) {
             throw new InvalidParameterException();
         }
         $modulo = $this->calculateModule($documentId);

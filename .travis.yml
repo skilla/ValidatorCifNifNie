@@ -8,7 +8,14 @@ php:
     - '7.0'
     - nightly
 
+before_script:
+    - travis_retry composer self-update
+    - travis_retry composer install --no-interaction --prefer-source --dev
+
 install:
     - composer install
 
-script: bin/phpunit -c phpunit.xml
+script: bin/phpunit -c phpunit.xml --coverage-clover=coverage.xml
+
+after_success:
+    - bash <(curl -s https://codecov.io/bash)

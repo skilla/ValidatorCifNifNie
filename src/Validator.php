@@ -100,13 +100,13 @@ class Validator
     public function isValidDNI($documentId)
     {
         if (!is_string($documentId) ||
-            strlen($documentId) !== self::DOCUMENT_LENGTH_WITH_CODE ||
+            strlen($documentId) !== static::DOCUMENT_LENGTH_WITH_CODE ||
             !$this->isDNIFormat($documentId)
         ) {
             return false;
         }
 
-        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getDNICode($documentFirstEightChars);
 
         return $code === $this->getLastCharOfString($documentId);
@@ -118,10 +118,10 @@ class Validator
      */
     public function isValidNIE($documentId)
     {
-        if (!is_string($documentId) || strlen($documentId)!== self::DOCUMENT_LENGTH_WITH_CODE || !$this->isNIEFormat($documentId)) {
+        if (!is_string($documentId) || strlen($documentId)!== static::DOCUMENT_LENGTH_WITH_CODE || !$this->isNIEFormat($documentId)) {
             return false;
         }
-        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getNIECode($documentFirstEightChars);
 
         return $code === $this->getLastCharOfString($documentId);
@@ -134,12 +134,12 @@ class Validator
     public function isValidNIF($documentId)
     {
         if (!is_string($documentId) ||
-            strlen($documentId) !== self::DOCUMENT_LENGTH_WITH_CODE ||
+            strlen($documentId) !== static::DOCUMENT_LENGTH_WITH_CODE ||
             !$this->isNIFFormat($documentId)
         ) {
             return false;
         }
-        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getNIFCode($documentFirstEightChars);
 
         return $code === $this->getLastCharOfString($documentId);
@@ -152,12 +152,12 @@ class Validator
     public function isValidCIF($documentId)
     {
         if (!is_string($documentId) ||
-            strlen($documentId) !== self::DOCUMENT_LENGTH_WITH_CODE
+            strlen($documentId) !== static::DOCUMENT_LENGTH_WITH_CODE
             || !$this->isCIFFormat($documentId)
         ) {
             return false;
         }
-        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getCIFCode($documentFirstEightChars);
 
         return $code === $this->getLastCharOfString($documentId);
@@ -169,10 +169,10 @@ class Validator
      */
     public function validate($documentId)
     {
-        $documentFirstEightChars = substr($documentId, 0, self::DOCUMENT_LENGTH_WITHOUT_CODE);
+        $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $controlCode = $this->generator->getDocumentCode($documentFirstEightChars);
 
-        return strlen($documentId) === self::DOCUMENT_LENGTH_WITH_CODE && $controlCode === $this->getLastCharOfString($documentId);
+        return strlen($documentId) === static::DOCUMENT_LENGTH_WITH_CODE && $controlCode === $this->getLastCharOfString($documentId);
     }
 
     /**
