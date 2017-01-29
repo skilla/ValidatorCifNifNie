@@ -7,6 +7,7 @@ Validator for Spanish National documents (CIF, NIF, NIE)
 [![Latest Unstable Version](https://poser.pugx.org/skilla/validator-cif-nif-nie/v/unstable)](https://packagist.org/packages/skilla/validator-cif-nif-nie#dev-master)
 [![License](https://poser.pugx.org/skilla/validator-cif-nif-nie/license)](https://packagist.org/packages/skilla/validator-cif-nif-nie)
 [![composer.lock](https://poser.pugx.org/skilla/validator-cif-nif-nie/composerlock)](https://packagist.org/packages/skilla/validator-cif-nif-nie)
+[![codecov](https://codecov.io/gh/skilla/ValidatorCifNifNie/branch/master/graph/badge.svg)](https://codecov.io/gh/skilla/ValidatorCifNifNie)
 
 ## [__Installation__ | __Instalación__]
 
