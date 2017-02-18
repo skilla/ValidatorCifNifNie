@@ -9,8 +9,9 @@
 namespace Skilla\ValidatorCifNifNie\Test;
 
 use Skilla\ValidatorCifNifNie\Generator;
+use PHPUnit\Framework\TestCase;
 
-class GeneratorTest extends \PHPUnit_Framework_TestCase
+class GeneratorTest extends TestCase
 {
     /**
      * @expectedException \Skilla\ValidatorCifNifNie\InvalidParameterException
