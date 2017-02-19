@@ -44,6 +44,10 @@ class ValidatorTest extends TestCase
             array(
                 '12345678A',
                 '12345678'
+            ),
+            array(
+                '14167864W',
+                '14167864'
             )
         );
     }
@@ -474,7 +478,8 @@ class ValidatorTest extends TestCase
                 'W0049001A',
                 'X9994480Z',
                 'Y4674358J',
-                'Z2842169H'
+                'Z2842169H',
+                '14167864W'
             )
         );
     }
