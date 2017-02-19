@@ -8,9 +8,11 @@
 
 namespace Skilla\ValidatorCifNifNie\Test;
 
+use PHPUnit\Framework\TestCase;
 use Skilla\ValidatorCifNifNie\Constant;
 
-class ConstantTest extends \PHPUnit_Framework_TestCase
+
+class ConstantTest extends TestCase
 {
     public function testRetrievePattern()
     {
