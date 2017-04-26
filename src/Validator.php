@@ -108,8 +108,10 @@ class Validator
 
         $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getDNICode($documentFirstEightChars);
+        
+        $lastChar = $this->getLastCharOfString($documentId);
 
-        return $code === $this->getLastCharOfString($documentId);
+        return ($code === $lastChar || strtolower($code) === $lastChar);
     }
 
     /**
@@ -123,8 +125,10 @@ class Validator
         }
         $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getNIECode($documentFirstEightChars);
+        
+        $lastChar = $this->getLastCharOfString($documentId);
 
-        return $code === $this->getLastCharOfString($documentId);
+        return ($code === $lastChar || strtolower($code) === $lastChar);
     }
 
     /**
@@ -141,8 +145,10 @@ class Validator
         }
         $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getNIFCode($documentFirstEightChars);
+        
+        $lastChar = $this->getLastCharOfString($documentId);
 
-        return $code === $this->getLastCharOfString($documentId);
+        return ($code === $lastChar || strtolower($code) === $lastChar);
     }
 
     /**
@@ -159,8 +165,10 @@ class Validator
         }
         $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $code = $this->generator->getCIFCode($documentFirstEightChars);
+        
+        $lastChar = $this->getLastCharOfString($documentId);
 
-        return $code === $this->getLastCharOfString($documentId);
+        return ($code === $lastChar || strtolower($code) === $lastChar);
     }
 
     /**
@@ -172,7 +180,10 @@ class Validator
         $documentFirstEightChars = substr($documentId, 0, static::DOCUMENT_LENGTH_WITHOUT_CODE);
         $controlCode = $this->generator->getDocumentCode($documentFirstEightChars);
 
-        return strlen($documentId) === static::DOCUMENT_LENGTH_WITH_CODE && $controlCode === $this->getLastCharOfString($documentId);
+        $lastChar = $this->getLastCharOfString($documentId);
+        
+        return strlen($documentId) === static::DOCUMENT_LENGTH_WITH_CODE && 
+                        ($controlCode === $lastChar || strtolower($controlCode) === $lastChar);
     }
 
     /**
