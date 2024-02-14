@@ -14,6 +14,11 @@ class Validator
     const DOCUMENT_LENGTH_WITHOUT_CODE = 8;
 
     /**
+     * @var Generator
+     */
+    private $generator;
+
+    /**
      * @param Generator $generator
      */
     public function __construct($generator)
